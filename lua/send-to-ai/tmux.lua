@@ -25,13 +25,18 @@ end
 --- List all tmux panes with their process information
 --- @return table|nil Array of pane info {session, pane_id, command, title}
 --- @return string|nil Error message
-local function list_all_panes()
+local function list_all_panes(config)
   if not M.is_in_tmux() then
     return nil, "Not in tmux session"
   end
 
+  local search_all_windows = " -a "
+  if config.prefer_window == true then
+    search_all_windows = ""
+  end
+
   local ok, panes = pcall(vim.fn.systemlist,
-    'tmux list-panes -a -F "#{session_name}:#{pane_id}:#{pane_current_command}:#{pane_title}"')
+    'tmux list-panes ' .. search_all_windows .. '-F "#{session_name}:#{pane_id}:#{pane_current_command}:#{pane_title}"')
 
   if not ok or not panes or #panes == 0 then
     return nil, "Failed to query tmux panes"
@@ -129,7 +134,7 @@ function M.find_ai_pane(config)
   end
 
   -- List all panes
-  local panes, err = list_all_panes()
+  local panes, err = list_all_panes(config)
   if not panes then
     return nil, err or "Failed to list tmux panes"
   end

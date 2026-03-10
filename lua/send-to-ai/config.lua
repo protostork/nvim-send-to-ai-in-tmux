@@ -4,6 +4,7 @@ local M = {}
 local defaults = {
   ai_processes = { 'claude', 'codex', 'opencode' },
   prefer_session = true,
+  prefer_window = false,
   fallback_clipboard = true,
   path_style = 'git_relative',
   path_style_fallback = 'filename_only',
