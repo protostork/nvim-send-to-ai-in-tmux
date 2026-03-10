@@ -124,6 +124,7 @@ function M.check()
   vim.health.ok(string.format('ai_processes: %s', table.concat(cfg.ai_processes, ', ')))
   vim.health.ok(string.format('max_selection_lines: %d', cfg.max_selection_lines))
   vim.health.ok(string.format('prefer_session: %s', tostring(cfg.prefer_session)))
+  vim.health.ok(string.format('prefer_window: %s', tostring(cfg.prefer_window)))
   vim.health.ok(string.format('fallback_clipboard: %s', tostring(cfg.fallback_clipboard)))
 end
 
